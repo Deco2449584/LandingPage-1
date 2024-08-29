@@ -1,4 +1,5 @@
 import logo from '/logo_bg.png'
+import './App.css'
 
 function App() {
 
