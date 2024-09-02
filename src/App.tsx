@@ -1,19 +1,14 @@
-import logo from '/logo_bg.png'
 import './App.css'
 
 function App() {
 
   return (
     <>
-      <div>
-        <a href="https://domocodetech.online" target="_blank">
-          <img src={logo} className="logo" alt="logo" />
-          
-        </a>
-        <p>
-            Hola Alejo
-          </p>
-       </div>
+    <div>
+    <h1 className='text-3xl font-bold underline'>Hello World</h1>
+
+    </div>
+
     </>
   )
 }
