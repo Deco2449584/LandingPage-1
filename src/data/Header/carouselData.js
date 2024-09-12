@@ -1,7 +1,10 @@
+import { Video } from "lucide-react";
+
 export const carouselData = [
     {
       id: 1,
-      image: '../../public/image/img1.jpg',
+      video: '../../../public/video/world.mp4', 
+      thumbnail: '../../../public/thumbnails/img1.jpg', // Añadir miniatura
       author: 'LUNDEV',
       title: 'DESIGN SLIDER',
       topic: 'ANIMAL',
@@ -9,7 +12,8 @@ export const carouselData = [
     },
     {
       id: 2,
-      image: '../../public/image/img2.jpg',
+      video:'../../../public/video/video2.mp4',
+      thumbnail:'../../../public/thumbnails/img2.jpg', // Añadir miniatura
       author: 'LUNDEV',
       title: 'NATURE LOVE',
       topic: 'SCENERY',
@@ -17,7 +21,8 @@ export const carouselData = [
     },
     {
       id: 3,
-      image: '../../public/image/img3.jpg',
+      video:'../../../public/video/video3.mp4',
+      thumbnail:'../../../public/thumbnails/img3.jpg', // Añadir miniatura
       author: 'LUNDEV',
       title: 'WILD LIFE',
       topic: 'SAFARI',
@@ -25,11 +30,11 @@ export const carouselData = [
     },
     {
       id: 4,
-      image: '../../public/image/img4.jpg',
+      video:'../../../public/video/video4.mp4',
+      thumbnail:'../../../public/thumbnails/img4.jpg', // Añadir miniatura
       author: 'LUNDEV',
       title: 'URBAN JUNGLE',
       topic: 'CITY',
       description: 'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.',
     }
-    
-  ];
+];
