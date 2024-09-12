@@ -4,7 +4,7 @@ export const carouselData = [
     {
       id: 1,
       video: '../../../public/video/world.mp4', 
-      thumbnail: '../../../public/thumbnails/img1.jpg', // Añadir miniatura
+      thumbnail: '../../../public/thumbnails/img1.jpg', 
       author: 'LUNDEV',
       title: 'DESIGN SLIDER',
       topic: 'ANIMAL',
@@ -13,7 +13,7 @@ export const carouselData = [
     {
       id: 2,
       video:'../../../public/video/video2.mp4',
-      thumbnail:'../../../public/thumbnails/img2.jpg', // Añadir miniatura
+      thumbnail:'../../../public/thumbnails/img2.jpg', 
       author: 'LUNDEV',
       title: 'NATURE LOVE',
       topic: 'SCENERY',
@@ -22,7 +22,7 @@ export const carouselData = [
     {
       id: 3,
       video:'../../../public/video/video3.mp4',
-      thumbnail:'../../../public/thumbnails/img3.jpg', // Añadir miniatura
+      thumbnail:'../../../public/thumbnails/img3.jpg',
       author: 'LUNDEV',
       title: 'WILD LIFE',
       topic: 'SAFARI',
@@ -31,7 +31,7 @@ export const carouselData = [
     {
       id: 4,
       video:'../../../public/video/video4.mp4',
-      thumbnail:'../../../public/thumbnails/img4.jpg', // Añadir miniatura
+      thumbnail:'../../../public/thumbnails/img4.jpg', 
       author: 'LUNDEV',
       title: 'URBAN JUNGLE',
       topic: 'CITY',

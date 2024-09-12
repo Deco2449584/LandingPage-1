@@ -5,13 +5,16 @@ import { ChevronLeft, ChevronRight, Play, Pause, Volume2, VolumeX } from 'lucide
 const VideoSlide = ({ slide, isActive, onSeeMore, onSubscribe }) => {
   const videoRef = useRef(null);
   const [isMuted, setIsMuted] = useState(true);
+  const [isPlaying, setIsPlaying] = useState(false);
 
   useEffect(() => {
     if (isActive) {
       videoRef.current.play();
+      setIsPlaying(true);
     } else {
       videoRef.current.pause();
       videoRef.current.currentTime = 0;
+      setIsPlaying(false);
     }
   }, [isActive]);
 
@@ -20,13 +23,22 @@ const VideoSlide = ({ slide, isActive, onSeeMore, onSubscribe }) => {
     videoRef.current.muted = !isMuted;
   };
 
+  const togglePlayPause = () => {
+    if (isPlaying) {
+      videoRef.current.pause();
+    } else {
+      videoRef.current.play();
+    }
+    setIsPlaying(!isPlaying);
+  };
+
   return (
     <div className={`absolute inset-0 transition-opacity duration-500 ease-in-out ${
       isActive ? 'opacity-100' : 'opacity-0'
     }`}>
       <video
         ref={videoRef}
-        src={slide.video} 
+        src={slide.video}
         className="w-full h-full object-cover"
         loop
         muted={isMuted}
@@ -55,12 +67,20 @@ const VideoSlide = ({ slide, isActive, onSeeMore, onSubscribe }) => {
           </div>
         </div>
       </div>
-      <button
-        onClick={toggleMute}
-        className="absolute bottom-4 right-4 w-10 h-10 bg-black bg-opacity-50 rounded-full flex items-center justify-center text-white hover:bg-opacity-75 transition-colors"
-      >
-        {isMuted ? <VolumeX size={20} /> : <Volume2 size={20} />}
-      </button>
+      <div className="absolute bottom-4 right-4 flex space-x-2">
+        <button
+          onClick={togglePlayPause}
+          className="w-10 h-10 bg-black bg-opacity-50 rounded-full flex items-center justify-center text-white hover:bg-opacity-75 transition-colors"
+        >
+          {isPlaying ? <Pause size={20} /> : <Play size={20} />}
+        </button>
+        <button
+          onClick={toggleMute}
+          className="w-10 h-10 bg-black bg-opacity-50 rounded-full flex items-center justify-center text-white hover:bg-opacity-75 transition-colors"
+        >
+          {isMuted ? <VolumeX size={20} /> : <Volume2 size={20} />}
+        </button>
+      </div>
     </div>
   );
 };
@@ -76,7 +96,7 @@ const CarouselThumbnails = ({ data, currentIndex, setCurrentIndex }) => (
         onClick={() => setCurrentIndex(index)}
       >
         <div className="relative w-full h-full">
-          <video src={item.videoUrl} className="w-full h-full object-cover" />
+          <img src={item.thumbnail} alt={item.title} className="w-full h-full object-cover" />
           <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black to-transparent pt-8 pb-2 px-2">
             <h4 className="text-xs sm:text-sm font-medium text-white truncate">{item.title}</h4>
             <p className="text-xs text-gray-300 truncate">{item.topic}</p>
