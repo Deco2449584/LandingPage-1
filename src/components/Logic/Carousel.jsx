@@ -56,6 +56,8 @@ const ProgressBar = ({ progress }) => (
 const Carousel = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+  const [isPlaying, setIsPlaying] = useState(true);
+  const [isMuted, setIsMuted] = useState(false);
   const [progress, setProgress] = useState(0);
 
   const nextSlide = useCallback(() => {
@@ -70,7 +72,7 @@ const Carousel = () => {
 
   useEffect(() => {
     let interval;
-    if (isAutoPlaying) {
+    if (isAutoPlaying && isPlaying) {
       interval = setInterval(() => {
         setProgress((prevProgress) => {
           if (prevProgress >= 100) {
@@ -82,7 +84,7 @@ const Carousel = () => {
       }, 100);
     }
     return () => clearInterval(interval);
-  }, [isAutoPlaying, nextSlide]);
+  }, [isAutoPlaying, isPlaying, nextSlide]);
 
   const handleSeeMore = () => {
     console.log('Navigating to more content');
@@ -94,6 +96,15 @@ const Carousel = () => {
 
   const toggleAutoPlay = () => {
     setIsAutoPlaying((prev) => !prev);
+    setIsPlaying((prev) => !prev);
+  };
+
+  const togglePlay = () => {
+    setIsPlaying((prev) => !prev);
+  };
+
+  const toggleMute = () => {
+    setIsMuted((prev) => !prev);
   };
 
   return (
@@ -105,6 +116,10 @@ const Carousel = () => {
           isActive={index === currentIndex}
           onSeeMore={handleSeeMore}
           onSubscribe={handleSubscribe}
+          isPlaying={isPlaying}
+          isMuted={isMuted}
+          onTogglePlay={togglePlay}
+          onToggleMute={toggleMute}
         />
       ))}
       <CarouselThumbnails

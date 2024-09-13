@@ -1,44 +1,32 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { VolumeX, Volume2, Play, Pause } from 'lucide-react';
 
-export const CarouselSlide = ({ slide, isActive, onSeeMore, onSubscribe }) => {
+export const CarouselSlide = ({ slide, isActive, onSeeMore, onSubscribe, isPlaying, isMuted, onTogglePlay, onToggleMute }) => {
   const videoRef = useRef(null);
   const audioRef = useRef(null);
-  const [isMuted, setIsMuted] = useState(false);
-  const [isPlaying, setIsPlaying] = useState(false);
 
   useEffect(() => {
     if (isActive) {
-      videoRef.current.play();
-      audioRef.current.play();
-      setIsPlaying(true);
+      if (isPlaying) {
+        videoRef.current.play();
+        audioRef.current.play();
+      } else {
+        videoRef.current.pause();
+        audioRef.current.pause();
+      }
     } else {
       videoRef.current.pause();
       audioRef.current.pause();
       videoRef.current.currentTime = 0;
       audioRef.current.currentTime = 0;
-      setIsPlaying(false);
     }
-  }, [isActive]);
+  }, [isActive, isPlaying]);
 
   useEffect(() => {
-    audioRef.current.muted = isMuted;
-  }, [isMuted]);
-
-  const toggleMute = () => {
-    setIsMuted(!isMuted);
-  };
-
-  const togglePlayPause = () => {
-    if (isPlaying) {
-      videoRef.current.pause();
-      audioRef.current.pause();
-    } else {
-      videoRef.current.play();
-      audioRef.current.play();
+    if (audioRef.current) {
+      audioRef.current.muted = isMuted;
     }
-    setIsPlaying(!isPlaying);
-  };
+  }, [isMuted]);
 
   return (
     <div className={`absolute inset-0 transition-opacity duration-500 ease-in-out ${
@@ -80,20 +68,22 @@ export const CarouselSlide = ({ slide, isActive, onSeeMore, onSubscribe }) => {
           </div>
         </div>
       </div>
-      <div className="absolute bottom-4 right-4 flex space-x-2">
-        <button
-          onClick={togglePlayPause}
-          className="w-10 h-10 bg-black bg-opacity-50 rounded-full flex items-center justify-center text-white hover:bg-opacity-75 transition-colors"
-        >
-          {isPlaying ? <Pause size={20} /> : <Play size={20} />}
-        </button>
-        <button
-          onClick={toggleMute}
-          className="w-10 h-10 bg-black bg-opacity-50 rounded-full flex items-center justify-center text-white hover:bg-opacity-75 transition-colors"
-        >
-          {isMuted ? <VolumeX size={20} /> : <Volume2 size={20} />}
-        </button>
-      </div>
+      {isActive && (
+        <div className="absolute bottom-4 right-4 flex space-x-2">
+          <button
+            onClick={onTogglePlay}
+            className="w-10 h-10 bg-black bg-opacity-50 rounded-full flex items-center justify-center text-white hover:bg-opacity-75 transition-colors"
+          >
+            {isPlaying ? <Pause size={20} /> : <Play size={20} />}
+          </button>
+          <button
+            onClick={onToggleMute}
+            className="w-10 h-10 bg-black bg-opacity-50 rounded-full flex items-center justify-center text-white hover:bg-opacity-75 transition-colors"
+          >
+            {isMuted ? <VolumeX size={20} /> : <Volume2 size={20} />}
+          </button>
+        </div>
+      )}
     </div>
   );
 };
