@@ -3,7 +3,8 @@ import { Video } from "lucide-react";
 export const carouselData = [
     {
       id: 1,
-      video: '../../../public/video/world.mp4', 
+      video: '../../../public/video/world.mp4',
+      audio: '../../../public/audio/audio1.mp3', // Add audio file path
       thumbnail: '../../../public/thumbnails/img1.jpg', 
       author: 'LUNDEV',
       title: 'DESIGN SLIDER',
@@ -13,6 +14,7 @@ export const carouselData = [
     {
       id: 2,
       video:'../../../public/video/video2.mp4',
+      audio: '../../../public/audio/audio1.mp3', // Add audio file path
       thumbnail:'../../../public/thumbnails/img2.jpg', 
       author: 'LUNDEV',
       title: 'NATURE LOVE',
@@ -22,6 +24,7 @@ export const carouselData = [
     {
       id: 3,
       video:'../../../public/video/video3.mp4',
+      audio: '../../../public/audio/audio1.mp3', // Add audio file path
       thumbnail:'../../../public/thumbnails/img3.jpg',
       author: 'LUNDEV',
       title: 'WILD LIFE',
@@ -31,6 +34,7 @@ export const carouselData = [
     {
       id: 4,
       video:'../../../public/video/video4.mp4',
+      audio: '../../../public/audio/audio1.mp3', // Add audio file path
       thumbnail:'../../../public/thumbnails/img4.jpg', 
       author: 'LUNDEV',
       title: 'URBAN JUNGLE',
