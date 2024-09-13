@@ -1,23 +1,22 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 
 export const CarouselSlide = ({ slide, isActive, onSeeMore, onSubscribe, isPlaying, isMuted }) => {
   const videoRef = useRef(null);
   const audioRef = useRef(null);
+  const [isVideoLoaded, setIsVideoLoaded] = useState(false);
 
   useEffect(() => {
     if (isActive) {
-      if (isPlaying) {
-        videoRef.current.play();
-        audioRef.current.play();
-      } else {
+      if (isPlaying && videoRef.current) {
+        videoRef.current.play().catch(error => console.error("Error playing video:", error));
+      } else if (videoRef.current) {
         videoRef.current.pause();
-        audioRef.current.pause();
       }
     } else {
-      videoRef.current.pause();
-      audioRef.current.pause();
-      videoRef.current.currentTime = 0;
-      audioRef.current.currentTime = 0;
+      if (videoRef.current) {
+        videoRef.current.pause();
+        videoRef.current.currentTime = 0;
+      }
     }
   }, [isActive, isPlaying]);
 
@@ -27,23 +26,37 @@ export const CarouselSlide = ({ slide, isActive, onSeeMore, onSubscribe, isPlayi
     }
   }, [isMuted]);
 
+  const handleVideoLoad = () => {
+    setIsVideoLoaded(true);
+  };
+
   return (
     <div className={`absolute inset-0 transition-opacity duration-500 ease-in-out ${
-      isActive ? 'opacity-100' : 'opacity-0'
+      isActive ? 'opacity-100' : 'opacity-0 pointer-events-none'
     }`}>
-      <video
-        ref={videoRef}
-        src={slide.video}
-        className="w-full h-full object-cover"
-        loop
-        muted
-        playsInline
+      <img 
+        src={slide.thumbnail} 
+        alt={slide.title} 
+        className={`w-full h-full object-cover absolute inset-0 ${isVideoLoaded ? 'opacity-0' : 'opacity-100'}`}
       />
-      <audio
-        ref={audioRef}
-        src={slide.audio}
-        loop
-      />
+      {isActive && (
+        <>
+          <video
+            ref={videoRef}
+            src={slide.video}
+            className="w-full h-full object-cover"
+            loop
+            muted
+            playsInline
+            onCanPlay={handleVideoLoad}
+          />
+          <audio
+            ref={audioRef}
+            src={slide.audio}
+            loop
+          />
+        </>
+      )}
       <div className="absolute inset-0 bg-black bg-opacity-50" />
       <div className="absolute inset-0 flex items-center justify-center">
         <div className="w-full max-w-4xl px-4 sm:px-6 lg:px-8 space-y-4 sm:space-y-6 text-center sm:text-left">

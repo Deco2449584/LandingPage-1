@@ -2,7 +2,8 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { carouselData } from '../../data/Header/carouselData';
 import { ChevronLeft, ChevronRight, Play, Pause, Volume2, VolumeX } from 'lucide-react';
 import { CarouselSlide } from '../Ui/CarouselComponents';
-const CarouselThumbnails = ({ data, currentIndex, setCurrentIndex }) => (
+
+export const CarouselThumbnails = ({ data, currentIndex, setCurrentIndex }) => (
   <div className="absolute bottom-4 sm:bottom-8 lg:bottom-12 left-1/2 transform -translate-x-1/2 flex space-x-2 sm:space-x-4">
     {data.map((item, index) => (
       <div
@@ -54,11 +55,33 @@ const ProgressBar = ({ progress }) => (
 
 
 
+export const preloadResources = () => {
+  carouselData.forEach(slide => {
+    // Precargar imágenes
+    const img = new Image();
+    img.src = slide.thumbnail;
+
+    // Precargar videos
+    const video = document.createElement('video');
+    video.preload = 'metadata';
+    video.src = slide.video;
+
+    // Precargar audio
+    const audio = new Audio();
+    audio.preload = 'metadata';
+    audio.src = slide.audio;
+  });
+};
+
 const Carousel = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
   const [isMuted, setIsMuted] = useState(false);
   const [progress, setProgress] = useState(0);
+
+  useEffect(() => {
+    preloadResources();
+  }, []);
 
   const nextSlide = useCallback(() => {
     setCurrentIndex((prevIndex) => (prevIndex + 1) % carouselData.length);
