@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { carouselData } from '../../data/Header/carouselData';
-import { ChevronLeft, ChevronRight, Play, Pause } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Play, Pause, Volume2, VolumeX } from 'lucide-react';
 import { CarouselSlide } from '../Ui/CarouselComponents';
-
 const CarouselThumbnails = ({ data, currentIndex, setCurrentIndex }) => (
   <div className="absolute bottom-4 sm:bottom-8 lg:bottom-12 left-1/2 transform -translate-x-1/2 flex space-x-2 sm:space-x-4">
     {data.map((item, index) => (
@@ -53,9 +52,10 @@ const ProgressBar = ({ progress }) => (
   </div>
 );
 
+
+
 const Carousel = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
   const [isPlaying, setIsPlaying] = useState(true);
   const [isMuted, setIsMuted] = useState(false);
   const [progress, setProgress] = useState(0);
@@ -72,7 +72,7 @@ const Carousel = () => {
 
   useEffect(() => {
     let interval;
-    if (isAutoPlaying && isPlaying) {
+    if (isPlaying) {
       interval = setInterval(() => {
         setProgress((prevProgress) => {
           if (prevProgress >= 100) {
@@ -84,7 +84,7 @@ const Carousel = () => {
       }, 100);
     }
     return () => clearInterval(interval);
-  }, [isAutoPlaying, isPlaying, nextSlide]);
+  }, [isPlaying, nextSlide]);
 
   const handleSeeMore = () => {
     console.log('Navigating to more content');
@@ -92,11 +92,6 @@ const Carousel = () => {
 
   const handleSubscribe = () => {
     console.log('Opening subscription form');
-  };
-
-  const toggleAutoPlay = () => {
-    setIsAutoPlaying((prev) => !prev);
-    setIsPlaying((prev) => !prev);
   };
 
   const togglePlay = () => {
@@ -118,8 +113,6 @@ const Carousel = () => {
           onSubscribe={handleSubscribe}
           isPlaying={isPlaying}
           isMuted={isMuted}
-          onTogglePlay={togglePlay}
-          onToggleMute={toggleMute}
         />
       ))}
       <CarouselThumbnails
@@ -129,12 +122,20 @@ const Carousel = () => {
       />
       <CarouselArrows prevSlide={prevSlide} nextSlide={nextSlide} />
       <ProgressBar progress={progress} />
-      <button
-        onClick={toggleAutoPlay}
-        className="absolute top-4 right-4 w-10 h-10 bg-black bg-opacity-50 rounded-full flex items-center justify-center text-white hover:bg-opacity-75 transition-colors"
-      >
-        {isAutoPlaying ? <Pause size={20} /> : <Play size={20} />}
-      </button>
+      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex space-x-4">
+        <button
+          onClick={togglePlay}
+          className="w-16 h-16 bg-black bg-opacity-50 rounded-full flex items-center justify-center text-white hover:bg-opacity-75 transition-colors"
+        >
+          {isPlaying ? <Pause size={32} /> : <Play size={32} />}
+        </button>
+        <button
+          onClick={toggleMute}
+          className="w-16 h-16 bg-black bg-opacity-50 rounded-full flex items-center justify-center text-white hover:bg-opacity-75 transition-colors"
+        >
+          {isMuted ? <VolumeX size={32} /> : <Volume2 size={32} />}
+        </button>
+      </div>
     </div>
   );
 };

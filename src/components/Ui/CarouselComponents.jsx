@@ -1,7 +1,6 @@
-import React, { useRef, useState, useEffect } from 'react';
-import { VolumeX, Volume2, Play, Pause } from 'lucide-react';
+import React, { useRef, useEffect } from 'react';
 
-export const CarouselSlide = ({ slide, isActive, onSeeMore, onSubscribe, isPlaying, isMuted, onTogglePlay, onToggleMute }) => {
+export const CarouselSlide = ({ slide, isActive, onSeeMore, onSubscribe, isPlaying, isMuted }) => {
   const videoRef = useRef(null);
   const audioRef = useRef(null);
 
@@ -68,22 +67,6 @@ export const CarouselSlide = ({ slide, isActive, onSeeMore, onSubscribe, isPlayi
           </div>
         </div>
       </div>
-      {isActive && (
-        <div className="absolute bottom-4 right-4 flex space-x-2">
-          <button
-            onClick={onTogglePlay}
-            className="w-10 h-10 bg-black bg-opacity-50 rounded-full flex items-center justify-center text-white hover:bg-opacity-75 transition-colors"
-          >
-            {isPlaying ? <Pause size={20} /> : <Play size={20} />}
-          </button>
-          <button
-            onClick={onToggleMute}
-            className="w-10 h-10 bg-black bg-opacity-50 rounded-full flex items-center justify-center text-white hover:bg-opacity-75 transition-colors"
-          >
-            {isMuted ? <VolumeX size={20} /> : <Volume2 size={20} />}
-          </button>
-        </div>
-      )}
     </div>
   );
 };
