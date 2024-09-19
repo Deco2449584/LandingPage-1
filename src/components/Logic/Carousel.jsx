@@ -39,7 +39,6 @@ export const CarouselThumbnails = ({ data, currentIndex, setCurrentIndex }) => (
     ))}
   </div>
 );
-
 const CarouselArrows = ({ prevSlide, nextSlide }) => (
   <div className="absolute top-1/2 left-0 right-0 flex justify-between px-4 sm:px-8">
     <button
